@@ -18,7 +18,7 @@ const DEFAULT_BAR_WIDTH = 10;
 const MIN_BAR_WIDTH = 4;
 const BRANCH_SECTION_MAX_WIDTH = 24;
 
-type ThinkingLevel = "off" | "minimal" | "low" | "medium" | "high" | "xhigh";
+type ThinkingLevel = "off" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max";
 
 type SeparatorMode = {
 	raw: string;
@@ -46,6 +46,7 @@ const thinkingColors: Record<ThinkingLevel, ThemeColor> = {
 	medium: "thinkingMedium",
 	high: "thinkingHigh",
 	xhigh: "thinkingXhigh",
+	max: "thinkingXhigh",
 };
 
 export default function (pi: ExtensionAPI) {
@@ -259,7 +260,7 @@ function buildModelSection(
 
 	const iconPart = theme.fg("accent", `${MODEL_ICON}${MODEL_ICON_GAP}`);
 	const bulletPart = theme.fg("dim", " • ");
-	const thinkingPart = theme.fg(thinkingColors[thinking], thinking);
+	const thinkingPart = theme.fg(thinkingColors[thinking] ?? "thinkingText", thinking);
 	const fixedWidth = visibleWidth(`${MODEL_ICON}${MODEL_ICON_GAP}`) + visibleWidth(`• ${thinking}`);
 	const availableForModel = Math.max(0, maxWidth - fixedWidth);
 	const truncatedModel = truncateToWidth(modelLabel, availableForModel);
